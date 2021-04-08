@@ -21,7 +21,7 @@ userData.append(['John','Landon','1234 SomePlace Crescent','4161234567',"jLand@g
 userData.append(['Riley', 'Alex', '123 Anywhere Road', '123456789',"alexaRiley@hotmail.com",\
                  'alexRiley', 'pAssword1',0]) #For test purposes
 #userData.append(['Briana', 'Alice', '123 Chip', '123456789',briannaMail56@gmail.com,'briChip'\
-                    #, 'pass123WORD',0]) #For testing 
+                    #, 'pass123WORD',0]) #For testing
 
 #This array stores security question and answer info about each user (Only needed for register/login purposes)
 global userQData
@@ -60,7 +60,7 @@ class MyFrontScreen(QMainWindow):
         self.hide()
         self.next=MyLoginScreen()
         self.next.show()
-    
+
     def fre_clicked(self):
         global language
         language='french'
@@ -81,11 +81,11 @@ class MyMainScreen(QMainWindow):
     def go_clicked(self):
         page_btn=[
             self.ui.register_button,
-            self.ui.login_button, 
+            self.ui.login_button,
             self.ui.report_button,
-            self.ui.suggest_button, 
-            self.ui.vote_button, 
-            self.ui.faq_button, 
+            self.ui.suggest_button,
+            self.ui.vote_button,
+            self.ui.faq_button,
             self.ui.contact_button,
             self.ui.profile_button,
             self.ui.myReports_button,
@@ -107,7 +107,7 @@ class MyMainScreen(QMainWindow):
 
         for i in range(len(page_obj)):
             if page_btn[i].isChecked():
-                
+
                 #if i == 10 logout (do it before netx statements i.e. "self.hide...")
                 self.hide()
                 self.next=page_obj[i]; self.next.show()
@@ -122,7 +122,7 @@ class MyLoginScreen(QMainWindow):
         else:   self.ui.retranslateUi_english(self)
         self.ui.login_button.clicked.connect(self.login_clicked)
         self.ui.cancel_button.clicked.connect(self.cancel_clicked)
-        self.ui.forgot_button.clicked.connect(self.forgot_clicked)  
+        self.ui.forgot_button.clicked.connect(self.forgot_clicked)
 
     def cancel_clicked(self):
         if userAccount is not None:
@@ -135,7 +135,7 @@ class MyLoginScreen(QMainWindow):
             self.next.show()
 
     def login_clicked(self):
-        ## Validate here 
+        ## Validate here
         ## get username and password as strings with - self.username.text() and self.password.text()
         userName=self.ui.username.text()
         password=self.ui.password.text()
@@ -161,14 +161,14 @@ class MyLoginScreen(QMainWindow):
     def isValidLogin(self,listInfo):
         foundUser=False
         userNum=-1
-        
+
         #Check if the username exists in userData
         for user in userData:
             userNum+=1
             if user[5]==listInfo[0]:
                 foundUser=True
                 break
-            
+
         if foundUser==False:
             if language=="english":
                 return("Username does not currently have an account")
@@ -197,11 +197,11 @@ class MyLoginScreen(QMainWindow):
     def forgot_clicked(self):
         self.SQ=LoginScreen.MyDialog(language)
         #get info with : self.SQ.ui.security_answer.text() and self.SQ.ui.security_question.text()
-        self.hide()     
+        self.hide()
         self.SQ.exec_()
         #Check if the question and answer match up to the userName
         username=self.ui.username.text()
-        
+
         #print(self.SQ.ui.security_question.text())
         self.next=MyFrontScreen(); self.next.show()
 
@@ -214,7 +214,7 @@ class MyRegisterScreen(QMainWindow):
         if language=='french':   self.ui.retranslateUi_french(self)
         else:   self.ui.retranslateUi_english(self)
         self.ui.register_button.clicked.connect(self.register_clicked)
-        self.ui.cancel_button.clicked.connect(self.cancel_clicked)  
+        self.ui.cancel_button.clicked.connect(self.cancel_clicked)
 
     def cancel_clicked(self):
         self.hide()
@@ -222,8 +222,8 @@ class MyRegisterScreen(QMainWindow):
 
     def register_clicked(self):
         ## make new user here. Get user info with
-        ## self.ui.first_name.text(), self.ui.last_name.text(), self.ui.address.text(), 
-        # for phone number - self.ui.phone_1.text()+self.ui.phone_2.text()+self.ui.phone_3.text() , 
+        ## self.ui.first_name.text(), self.ui.last_name.text(), self.ui.address.text(),
+        # for phone number - self.ui.phone_1.text()+self.ui.phone_2.text()+self.ui.phone_3.text() ,
         # self.ui.username.text(), self.ui.password.text()]
         firstName=self.ui.first_name.text()
         lastName=self.ui.last_name.text()
@@ -232,7 +232,7 @@ class MyRegisterScreen(QMainWindow):
         email=self.ui.email_address.text()
         userName=self.ui.username.text()
         password=self.ui.password.text()
-        
+
         #Add the elements to a list that will be added to userData if it is correct
         listInfo=[firstName,lastName,address,phone,email,userName,password,0]
 
@@ -260,7 +260,7 @@ class MyRegisterScreen(QMainWindow):
         foundUpper=False #If an uppercase letter has been found in password
         foundLower=False #If a lowercase letter has been found in password
         #Make sure no fields are empty, if any are empty return false
-        
+
         for i in range(0,len(listInfo)-1):
             element=listInfo[i]
             if len(element)==0:
@@ -268,21 +268,21 @@ class MyRegisterScreen(QMainWindow):
                     return("Not all fields are filled out correctly")
                 else:
                     return("Tous les champs ne sont pas remplis correctement")
-            
+
         #for element in listInfo:
             #if len(element)==0:
                 #if language=="english":
                     #return("Not all fields are filled out correctly")
                 #else:
                     #return("Tous les champs ne sont pas remplis correctement")
-            
+
         #If the length of password is less than 8 chars return false
         if len(listInfo[6])<8:
             if language=="english":
                 return("Length of password is too short")
             else:
                 return("La longueur du mot de passe est trop courte")
-            
+
         #Go through each character in password to check requirements
         for letter in listInfo[6]:
             #Check for a number
@@ -303,7 +303,7 @@ class MyRegisterScreen(QMainWindow):
             else:
                 return("Le mot de passe manque au moins l'un des éléments suivants:\n - 1 chiffre \n - 1 lettre majuscule\
                         \n - 1  lettre minuscule")
-            
+
         #If userData is empty add this as the first element
         if len(userData)==0:
             userData.append(listInfo)
@@ -322,23 +322,22 @@ class MyRegisterScreen(QMainWindow):
         return True
 
 class MyReportScreen(QMainWindow):
-	def __init__(self):
-		super().__init__()
-		global language
-		self.ui=ReportScreen.Ui_ReportScreen()
-		self.ui.setupUi(self)
-		if language=='french':   self.ui.retranslateUi_french(self)
-		else:   self.ui.retranslateUi_english(self)
-		self.ui.report_button.clicked.connect(self.report_clicked)
-		self.ui.cancel_button.clicked.connect(self.cancel_clicked)  
+    def __init__(self):
+        super().__init__()
+        global language
+        self.ui=ReportScreen.Ui_ReportScreen()
+        self.ui.setupUi(self)
+        if language=='french':   self.ui.retranslateUi_french(self)
+        else:   self.ui.retranslateUi_english(self)
+        self.ui.report_button.clicked.connect(self.report_clicked)
+        self.ui.cancel_button.clicked.connect(self.cancel_clicked)
 
-	def cancel_clicked(self):
-		self.hide()
-		self.next=MyMainScreen(); self.next.show()
+    def cancel_clicked(self):
+        self.hide()
+        self.next=MyMainScreen(); self.next.show()
 
-
-	def report_clicked(self):
-		prblm_str=[
+    def report_clicked(self):
+        prblm_str=[
 		'Utility Failures',
 		'Potholes',
 		'City Property Vandalism',
@@ -348,7 +347,7 @@ class MyReportScreen(QMainWindow):
 		'Mould and Spore Growth',
 		'Garbage or any Other Road Blocking Objects'
 		]
-		prblm_btn=[
+        prblm_btn=[
 		self.ui.utilitly_failures_button,
 		self.ui.potholes_button,
 		self.ui.vandalism_button,
@@ -357,14 +356,24 @@ class MyReportScreen(QMainWindow):
 		self.ui.flood_button,
 		self.ui.mould_button,
 		self.ui.road_block_button
-		]
-		address=self.ui.address.text()
-		for i in range(len(prblm_str)):
-			if prblm_btn[i].isChecked():
-				promblem=prblm_str[i]
-        
-        # report problem here with 'address' and 'problem' variables
-		self.cancel_clicked()
+        ]
+        address = self.ui.address.text()
+        promblem = ""
+        for i in range(len(prblm_str)):
+            if prblm_btn[i].isChecked():
+                promblem=prblm_str[i]
+
+        else:
+            msg = "Please ensure all required fields are filled."
+        # populating reports_database by checking to see if any existing complaint
+        # from current user is present in the reportdb.
+        if userAccount not in userReports:
+            userReports[userAccount] = [[address, promblem]]
+
+        else:
+            userReports[userAccount].append([address, promblem])
+
+        self.cancel_clicked()
 
 class MyProfileScreen(QMainWindow):
 	def __init__(self):
@@ -382,8 +391,8 @@ class MyProfileScreen(QMainWindow):
 		#else:   self.ui.retranslateUi_english(self)
 		self.ui.retranslateUi(self, self.userInfo)
 		self.ui.edit_button.clicked.connect(self.resetUpUi)
-		self.ui.delete_button.clicked.connect(self.delete_clicked) 
-		self.ui.cancel_button.clicked.connect(self.cancel_clicked)  
+		self.ui.delete_button.clicked.connect(self.delete_clicked)
+		self.ui.cancel_button.clicked.connect(self.cancel_clicked)
 
 	def cancel_clicked(self):
 		self.hide()
@@ -414,7 +423,7 @@ class MyProfileScreen(QMainWindow):
 			self.ui.retranslateUi(self, self.userInfo)
 		else:
 			#save by updating user information
-			self.cancel_clicked()	
+			self.cancel_clicked()
 
 class MyUserReports(QMainWindow):
 	def __init__(self):
@@ -447,6 +456,8 @@ class MyUserReports(QMainWindow):
 			self.hide()
 			self.next=MyReportScreen(); self.next.ui.address.setText(self.prblm_lis[self.clicked_prblm][0])
 			self.next.show()
+
+
 		pass
 	def delete_clicked(self):
 		if self.clicked_prblm > 0:
@@ -468,4 +479,4 @@ if __name__ == '__main__':
     w = MyFrontScreen()
     w.show()
     sys.exit(app.exec_())
-    
+
